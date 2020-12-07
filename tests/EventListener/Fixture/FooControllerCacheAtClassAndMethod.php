@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 /**
  * @Cache(smaxage="20")
  */
-#[Cache(smaxage: 20)]
 class FooControllerCacheAtClassAndMethod
 {
     const CLASS_SMAXAGE = 20;
@@ -16,7 +15,6 @@ class FooControllerCacheAtClassAndMethod
     /**
      * @Cache(smaxage="25")
      */
-    #[Cache(smaxage: 25)]
     public function barAction()
     {
     }
