@@ -52,10 +52,10 @@ class IsGranted extends ConfigurationAnnotation
     private $statusCode;
 
     public function __construct(
-        $values,
+        $values = [],
         $subject = null,
-        $message = null,
-        $statusCode = null
+        string $message = null,
+        int $statusCode = null
     ) {
         if (isset($values[0])) {
             $values['attributes'] = $values[0];

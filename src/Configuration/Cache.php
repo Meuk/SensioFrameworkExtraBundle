@@ -11,7 +11,6 @@
 
 namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
 
-
 /**
  * The Cache class handles the Cache annotation parts.
  *
@@ -105,14 +104,14 @@ class Cache extends ConfigurationAnnotation
 
     public function __construct(
         $values = [],
-        $expires = null,
-        $maxage = null,
-        $smaxage = null,
-        $public = false,
-        $mustRevalidate = false,
-        $vary = [],
-        $lastModified = null,
-        $Etag = null,
+        string $expires = null,
+        int $maxage = null,
+        int $smaxage = null,
+        bool $public = false,
+        bool $mustRevalidate = false,
+        array $vary = [],
+        string $lastModified = null,
+        string $Etag = null,
         $maxstale = null,
         $staleWhileRevalidate = null,
         $staleIfError = null

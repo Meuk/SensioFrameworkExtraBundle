@@ -51,9 +51,9 @@ class Template extends ConfigurationAnnotation
 
     public function __construct(
         $values = [],
-        $vars = [],
-        $isStreamable = false,
-        $owner = []
+        array $vars = [],
+        bool $isStreamable = false,
+        array $owner = []
     ) {
         if (isset($values[0])) {
             $values['template'] = $values[0];

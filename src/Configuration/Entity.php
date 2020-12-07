@@ -29,12 +29,12 @@ class Entity extends ParamConverter
     }
 
     public function __construct(
-        $values,
-        $expr = null,
-        $class = null,
-        $options = [],
-        $isOptional = false,
-        $converter = null
+        $values = [],
+        string $expr = null,
+        string $class = null,
+        array $options = [],
+        bool $isOptional = false,
+        string $converter = null
     ) {
         if (isset($values[0])) {
             $values['value'] = $values[0];

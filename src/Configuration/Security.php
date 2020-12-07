@@ -45,9 +45,9 @@ class Security extends ConfigurationAnnotation
     protected $message = 'Access denied.';
 
     public function __construct(
-        $values,
-        $message = null,
-        $statusCode = null
+        $values = [],
+        string $message = null,
+        int $statusCode = null
     ) {
         if (isset($values[0])) {
             $values['expression'] = $values[0];
