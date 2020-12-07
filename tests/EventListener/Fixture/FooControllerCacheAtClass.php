@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 /**
  * @Cache(smaxage="20")
  */
+#[Cache(smaxage: 20)]
 class FooControllerCacheAtClass
 {
     const CLASS_SMAXAGE = 20;

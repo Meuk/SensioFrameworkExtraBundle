@@ -194,7 +194,7 @@ class HttpCacheListenerTest extends \PHPUnit\Framework\TestCase
 
     public function testEtagNotModifiedResponse()
     {
-        $request = $this->createRequest(new Cache(['etag' => 'test.getId()']));
+        $request = $this->createRequest(new Cache(['Etag' => 'test.getId()']));
         $request->attributes->set('test', $entity = new TestEntity());
         $request->headers->add(['If-None-Match' => sprintf('"%s"', hash('sha256', $entity->getId()))]);
 
@@ -211,7 +211,7 @@ class HttpCacheListenerTest extends \PHPUnit\Framework\TestCase
 
     public function testEtagHeader()
     {
-        $request = $this->createRequest(new Cache(['ETag' => 'test.getId()']));
+        $request = $this->createRequest(new Cache(['Etag' => 'test.getId()']));
         $request->attributes->set('test', $entity = new TestEntity());
         $response = new Response();
 

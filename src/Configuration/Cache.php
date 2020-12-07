@@ -11,12 +11,14 @@
 
 namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
 
+
 /**
  * The Cache class handles the Cache annotation parts.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
+#[\Attribute()]
 class Cache extends ConfigurationAnnotation
 {
     /**
@@ -100,6 +102,35 @@ class Cache extends ConfigurationAnnotation
      * @var int|string
      */
     private $staleIfError;
+
+    public function __construct(
+        $data = [],
+        $expires = null,
+        $maxage = null,
+        $smaxage = null,
+        $public = false,
+        $mustRevalidate = false,
+        $vary = [],
+        $lastModified = null,
+        $Etag = null,
+        $maxstale = null,
+        $staleWhileRevalidate = null,
+        $staleIfError = null
+    ) {
+        $data['expires'] = $data['expires'] ??$expires;
+        $data['maxage'] = $data['maxage'] ??$maxage;
+        $data['smaxage'] = $data['smaxage'] ??$smaxage;
+        $data['public'] = $data['public'] ??$public;
+        $data['mustRevalidate'] = $data['mustRevalidate'] ??$mustRevalidate;
+        $data['vary'] = $data['vary'] ??$vary;
+        $data['lastModified'] = $data['lastModified'] ??$lastModified;
+        $data['Etag'] = $data['Etag'] ??$Etag;
+        $data['maxstale'] = $data['maxstale'] ??$maxstale;
+        $data['staleWhileRevalidate'] = $data['staleWhileRevalidate'] ??$staleWhileRevalidate;
+        $data['staleIfError'] = $data['staleIfError'] ??$staleIfError;
+
+        parent::__construct($data);
+    }
 
     /**
      * Returns the expiration date for the Expires header field.

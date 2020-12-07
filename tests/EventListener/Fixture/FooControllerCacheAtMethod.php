@@ -11,6 +11,7 @@ class FooControllerCacheAtMethod
     /**
      * @Cache(smaxage="15")
      */
+    #[Cache(smaxage: 15)]
     public function barAction()
     {
     }

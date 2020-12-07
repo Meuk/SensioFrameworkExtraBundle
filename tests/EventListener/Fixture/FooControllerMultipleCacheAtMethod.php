@@ -10,6 +10,8 @@ class FooControllerMultipleCacheAtMethod
      * @Cache()
      * @Cache()
      */
+    #[Cache()]
+    #[Cache()]
     public function barAction()
     {
     }
