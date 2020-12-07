@@ -104,7 +104,7 @@ class Cache extends ConfigurationAnnotation
     private $staleIfError;
 
     public function __construct(
-        $data = [],
+        $values = [],
         $expires = null,
         $maxage = null,
         $smaxage = null,
@@ -117,19 +117,19 @@ class Cache extends ConfigurationAnnotation
         $staleWhileRevalidate = null,
         $staleIfError = null
     ) {
-        $data['expires'] = $data['expires'] ??$expires;
-        $data['maxage'] = $data['maxage'] ??$maxage;
-        $data['smaxage'] = $data['smaxage'] ??$smaxage;
-        $data['public'] = $data['public'] ??$public;
-        $data['mustRevalidate'] = $data['mustRevalidate'] ??$mustRevalidate;
-        $data['vary'] = $data['vary'] ??$vary;
-        $data['lastModified'] = $data['lastModified'] ??$lastModified;
-        $data['Etag'] = $data['Etag'] ??$Etag;
-        $data['maxstale'] = $data['maxstale'] ??$maxstale;
-        $data['staleWhileRevalidate'] = $data['staleWhileRevalidate'] ??$staleWhileRevalidate;
-        $data['staleIfError'] = $data['staleIfError'] ??$staleIfError;
+        $values['expires'] = $values['expires'] ??$expires;
+        $values['maxage'] = $values['maxage'] ??$maxage;
+        $values['smaxage'] = $values['smaxage'] ??$smaxage;
+        $values['public'] = $values['public'] ??$public;
+        $values['mustRevalidate'] = $values['mustRevalidate'] ??$mustRevalidate;
+        $values['vary'] = $values['vary'] ??$vary;
+        $values['lastModified'] = $values['lastModified'] ??$lastModified;
+        $values['Etag'] = $values['Etag'] ??$Etag;
+        $values['maxstale'] = $values['maxstale'] ??$maxstale;
+        $values['staleWhileRevalidate'] = $values['staleWhileRevalidate'] ??$staleWhileRevalidate;
+        $values['staleIfError'] = $values['staleIfError'] ??$staleIfError;
 
-        parent::__construct($data);
+        parent::__construct($values);
     }
 
     /**

@@ -17,6 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
+#[\Attribute()]
 class ParamConverter extends ConfigurationAnnotation
 {
     /**
@@ -53,6 +54,24 @@ class ParamConverter extends ConfigurationAnnotation
      * @var string
      */
     private $converter;
+
+    public function __construct(
+        $values,
+        $class = null,
+        $options = [],
+        $isOptional = false,
+        $converter = null
+    ) {
+        if (array_values($values) === $values && !empty($values)) {
+            $values['value'] = $values[0];
+            unset($values[0]);
+        }
+        $values['class'] = $values['class'] ??$class;
+        $values['options'] = $values['options'] ??$options;
+        $values['isOptional'] = $values['isOptional'] ??$isOptional;
+        $values['converter'] = $values['converter'] ??$converter;
+        parent::__construct($values);
+    }
 
     /**
      * Returns the parameter name.

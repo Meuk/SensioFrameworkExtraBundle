@@ -17,9 +17,15 @@ use Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAtClass;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAtClassAndMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAtMethod;
+use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAttributeAtClass;
+use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAttributeAtClassAndMethod;
+use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAttributeAtMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAtClass;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAtMethod;
+use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAttributeAtClass;
+use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAttributeAtMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerParamConverterAtClassAndMethod;
+use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerParamConverterAttributeAtClassAndMethod;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -52,9 +58,36 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(FooControllerCacheAtMethod::METHOD_SMAXAGE, $this->getReadedCache()->getSMaxAge());
     }
 
+    /**
+     * @requires PHP 8.0
+     */
+    public function testCacheAttributeAtMethod()
+    {
+        $controller = new FooControllerCacheAttributeAtMethod();
+
+        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
+        $this->listener->onKernelController($this->event);
+
+        $this->assertNotNull($this->getReadedCache());
+        $this->assertEquals(FooControllerCacheAtMethod::METHOD_SMAXAGE, $this->getReadedCache()->getSMaxAge());
+    }
+
     public function testCacheAnnotationAtClass()
     {
         $controller = new FooControllerCacheAtClass();
+        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
+        $this->listener->onKernelController($this->event);
+
+        $this->assertNotNull($this->getReadedCache());
+        $this->assertEquals(FooControllerCacheAtClass::CLASS_SMAXAGE, $this->getReadedCache()->getSMaxAge());
+    }
+
+    /**
+     * @requires PHP 8.0
+     */
+    public function testCacheAttributeAtClass()
+    {
+        $controller = new FooControllerCacheAttributeAtClass();
         $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
         $this->listener->onKernelController($this->event);
 
@@ -78,12 +111,44 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(FooControllerCacheAtClassAndMethod::CLASS_SMAXAGE, $this->getReadedCache()->getSMaxAge());
     }
 
+    /**
+     * @requires PHP 8.0
+     */
+    public function testCacheAttributeAtClassAndMethod()
+    {
+        $controller = new FooControllerCacheAttributeAtClassAndMethod();
+        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
+        $this->listener->onKernelController($this->event);
+
+        $this->assertNotNull($this->getReadedCache());
+        $this->assertEquals(FooControllerCacheAttributeAtClassAndMethod::METHOD_SMAXAGE, $this->getReadedCache()->getSMaxAge());
+
+        $this->event = $this->getFilterControllerEvent([$controller, 'bar2Action'], $this->request);
+        $this->listener->onKernelController($this->event);
+
+        $this->assertNotNull($this->getReadedCache());
+        $this->assertEquals(FooControllerCacheAttributeAtClassAndMethod::CLASS_SMAXAGE, $this->getReadedCache()->getSMaxAge());
+    }
+
     public function testMultipleAnnotationsOnClassThrowsExceptionUnlessConfigurationAllowsArray()
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('Multiple "cache" annotations are not allowed');
 
         $controller = new FooControllerMultipleCacheAtClass();
+        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
+        $this->listener->onKernelController($this->event);
+    }
+
+    /**
+     * @requires PHP 8.0
+     */
+    public function testMultipleAttributesOnClassThrowsExceptionUnlessConfigurationAllowsArray()
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Multiple "cache" annotations are not allowed');
+
+        $controller = new FooControllerMultipleCacheAttributeAtClass();
         $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
         $this->listener->onKernelController($this->event);
     }
@@ -98,10 +163,46 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->onKernelController($this->event);
     }
 
+    /**
+     * @requires PHP 8.0
+     */
+    public function testMultipleAttributesOnMethodThrowsExceptionUnlessConfigurationAllowsArray()
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Multiple "cache" annotations are not allowed');
+
+        $controller = new FooControllerMultipleCacheAttributeAtMethod();
+        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
+        $this->listener->onKernelController($this->event);
+    }
+
     public function testMultipleParamConverterAnnotationsOnMethod()
     {
         $paramConverter = new \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter([]);
         $controller = new FooControllerParamConverterAtClassAndMethod();
+        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
+        $this->listener->onKernelController($this->event);
+
+        $annotations = $this->request->attributes->get('_converters');
+        $this->assertNotNull($annotations);
+        $this->assertArrayHasKey(0, $annotations);
+        $this->assertInstanceOf('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter', $annotations[0]);
+        $this->assertEquals('test', $annotations[0]->getName());
+
+        $this->assertArrayHasKey(1, $annotations);
+        $this->assertInstanceOf('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter', $annotations[1]);
+        $this->assertEquals('test2', $annotations[1]->getName());
+
+        $this->assertCount(2, $annotations);
+    }
+
+    /**
+     * @requires PHP 8.0
+     */
+    public function testMultipleParamConverterAttributesOnMethod()
+    {
+        $paramConverter = new \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter([]);
+        $controller = new FooControllerParamConverterAttributeAtClassAndMethod();
         $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
         $this->listener->onKernelController($this->event);
 
