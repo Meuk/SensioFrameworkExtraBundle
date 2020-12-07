@@ -17,6 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Ryan Weaver <ryan@knpuniversity.com>
  * @Annotation
  */
+#[\Attribute()]
 class IsGranted extends ConfigurationAnnotation
 {
     /**
@@ -49,6 +50,23 @@ class IsGranted extends ConfigurationAnnotation
      * @var int|null
      */
     private $statusCode;
+
+    public function __construct(
+        $values,
+        $subject = null,
+        $message = null,
+        $statusCode = null
+    ) {
+        if (isset($values[0])) {
+            $values['attributes'] = $values[0];
+            unset($values[0]);
+        }
+
+        $values['subject'] = $values['subject'] ??$subject;
+        $values['message'] = $values['message'] ??$message;
+        $values['statusCode'] = $values['statusCode'] ??$statusCode;
+        parent::__construct($values);
+    }
 
     public function setAttributes($attributes)
     {

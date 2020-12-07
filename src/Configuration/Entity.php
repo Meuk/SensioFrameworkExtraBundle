@@ -17,6 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Ryan Weaver <ryan@knpuniversity.com>
  * @Annotation
  */
+#[\Attribute()]
 class Entity extends ParamConverter
 {
     public function setExpr($expr)
@@ -25,5 +26,25 @@ class Entity extends ParamConverter
         $options['expr'] = $expr;
 
         $this->setOptions($options);
+    }
+
+    public function __construct(
+        $values,
+        $expr = null,
+        $class = null,
+        $options = [],
+        $isOptional = false,
+        $converter = null
+    ) {
+        if (isset($values[0])) {
+            $values['value'] = $values[0];
+            unset($values[0]);
+        }
+
+        $values['expr'] = $values['expr'] ??$expr;
+
+        parent::__construct($values, $class, $options, $isOptional, $converter);
+
+        $this->setExpr($values['expr']);
     }
 }

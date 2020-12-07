@@ -17,6 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
+#[\Attribute()]
 class Security extends ConfigurationAnnotation
 {
     /**
@@ -42,6 +43,22 @@ class Security extends ConfigurationAnnotation
      * @var string
      */
     protected $message = 'Access denied.';
+
+    public function __construct(
+        $values,
+        $message = null,
+        $statusCode = null
+    ) {
+        if (isset($values[0])) {
+            $values['expression'] = $values[0];
+            unset($values[0]);
+        }
+
+        $values['message'] = $values['message'] ??$message;
+        $values['statusCode'] = $values['statusCode'] ??$statusCode;
+
+        parent::__construct($values);
+    }
 
     public function getExpression()
     {

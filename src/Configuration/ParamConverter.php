@@ -62,7 +62,7 @@ class ParamConverter extends ConfigurationAnnotation
         $isOptional = false,
         $converter = null
     ) {
-        if (array_values($values) === $values && !empty($values)) {
+        if (isset($values[0])) {
             $values['value'] = $values[0];
             unset($values[0]);
         }
