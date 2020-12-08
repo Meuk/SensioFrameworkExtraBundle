@@ -62,9 +62,9 @@ class IsGranted extends ConfigurationAnnotation
             unset($values[0]);
         }
 
-        $values['subject'] = $values['subject'] ??$subject;
-        $values['message'] = $values['message'] ??$message;
-        $values['statusCode'] = $values['statusCode'] ??$statusCode;
+        $values['subject'] = $values['subject'] ?? $subject;
+        $values['message'] = $values['message'] ?? $message;
+        $values['statusCode'] = $values['statusCode'] ?? $statusCode;
         parent::__construct($values);
     }
 

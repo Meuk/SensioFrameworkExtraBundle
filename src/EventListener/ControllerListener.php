@@ -13,7 +13,6 @@ namespace Sensio\Bundle\FrameworkExtraBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Persistence\Proxy;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -63,14 +62,14 @@ class ControllerListener implements EventSubscriberInterface
 
         if (method_exists($method, 'getAttributes')) {
             $classAttributes = $object->getAttributes();
-            array_walk($classAttributes, function(\ReflectionAttribute &$value) {
+            array_walk($classAttributes, function (\ReflectionAttribute &$value) {
                 $className = '\\'.$value->getName();
                 $value = new $className($value->getArguments());
             });
             $classConfigurations = array_merge($classConfigurations, $this->getConfigurations($classAttributes));
 
             $methodAttributes = $method->getAttributes();
-            array_walk($methodAttributes, function(\ReflectionAttribute &$value) {
+            array_walk($methodAttributes, function (\ReflectionAttribute &$value) {
                 $className = '\\'.$value->getName();
                 $value = new $className($value->getArguments());
             });

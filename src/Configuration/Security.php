@@ -54,8 +54,8 @@ class Security extends ConfigurationAnnotation
             unset($values[0]);
         }
 
-        $values['message'] = $values['message'] ??$message;
-        $values['statusCode'] = $values['statusCode'] ??$statusCode;
+        $values['message'] = $values['message'] ?? $message;
+        $values['statusCode'] = $values['statusCode'] ?? $statusCode;
 
         parent::__construct($values);
     }

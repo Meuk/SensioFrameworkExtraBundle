@@ -48,7 +48,6 @@ class Template extends ConfigurationAnnotation
      */
     private $owner = [];
 
-
     public function __construct(
         $values = [],
         array $vars = [],
@@ -60,9 +59,9 @@ class Template extends ConfigurationAnnotation
             unset($values[0]);
         }
 
-        $values['isStreamable'] = $values['isStreamable'] ??$isStreamable;
-        $values['vars'] = $values['vars'] ??$vars;
-        $values['owner'] = $values['owner'] ??$owner;
+        $values['isStreamable'] = $values['isStreamable'] ?? $isStreamable;
+        $values['vars'] = $values['vars'] ?? $vars;
+        $values['owner'] = $values['owner'] ?? $owner;
 
         parent::__construct($values);
     }

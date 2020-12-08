@@ -66,10 +66,10 @@ class ParamConverter extends ConfigurationAnnotation
             $values['value'] = $values[0];
             unset($values[0]);
         }
-        $values['class'] = $values['class'] ??$class;
-        $values['options'] = $values['options'] ??$options;
-        $values['isOptional'] = $values['isOptional'] ??$isOptional;
-        $values['converter'] = $values['converter'] ??$converter;
+        $values['class'] = $values['class'] ?? $class;
+        $values['options'] = $values['options'] ?? $options;
+        $values['isOptional'] = $values['isOptional'] ?? $isOptional;
+        $values['converter'] = $values['converter'] ?? $converter;
         parent::__construct($values);
     }
 

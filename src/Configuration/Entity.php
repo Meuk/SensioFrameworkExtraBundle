@@ -41,7 +41,7 @@ class Entity extends ParamConverter
             unset($values[0]);
         }
 
-        $values['expr'] = $values['expr'] ??$expr;
+        $values['expr'] = $values['expr'] ?? $expr;
 
         parent::__construct($values, $class, $options, $isOptional, $converter);
 
