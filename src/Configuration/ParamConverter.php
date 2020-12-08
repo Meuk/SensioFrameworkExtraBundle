@@ -63,7 +63,7 @@ class ParamConverter extends ConfigurationAnnotation
         $converter = null
     ) {
         $values = [];
-        if (is_string($data)) {
+        if (\is_string($data)) {
             $values['value'] = $data;
         } else {
             $values = $data;

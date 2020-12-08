@@ -50,7 +50,7 @@ class Security extends ConfigurationAnnotation
         $statusCode = null
     ) {
         $values = [];
-        if (is_string($data)) {
+        if (\is_string($data)) {
             $values['expression'] = $data;
         } else {
             $values = $data;

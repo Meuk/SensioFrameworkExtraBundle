@@ -58,7 +58,7 @@ class IsGranted extends ConfigurationAnnotation
         $statusCode = null
     ) {
         $values = [];
-        if (is_string($data)) {
+        if (\is_string($data)) {
             $values['attributes'] = $data;
         } else {
             $values = $data;

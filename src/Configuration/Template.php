@@ -55,7 +55,7 @@ class Template extends ConfigurationAnnotation
         $owner = []
     ) {
         $values = [];
-        if (is_string($data)) {
+        if (\is_string($data)) {
             $values['template'] = $data;
         } else {
             $values = $data;
