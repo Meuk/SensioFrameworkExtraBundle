@@ -17,7 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Ryan Weaver <ryan@knpuniversity.com>
  * @Annotation
  */
-#[\Attribute()]
+#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class IsGranted extends ConfigurationAnnotation
 {
     /**
@@ -52,14 +52,16 @@ class IsGranted extends ConfigurationAnnotation
     private $statusCode;
 
     public function __construct(
-        $values = [],
+        $data = [],
         $subject = null,
-        string $message = null,
-        int $statusCode = null
+        $message = null,
+        $statusCode = null
     ) {
-        if (isset($values[0])) {
-            $values['attributes'] = $values[0];
-            unset($values[0]);
+        $values = [];
+        if (is_string($data)) {
+            $values['attributes'] = $data;
+        } else {
+            $values = $data;
         }
 
         $values['subject'] = $values['subject'] ?? $subject;

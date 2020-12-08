@@ -17,7 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
-#[\Attribute()]
+#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class Cache extends ConfigurationAnnotation
 {
     /**
@@ -104,14 +104,14 @@ class Cache extends ConfigurationAnnotation
 
     public function __construct(
         $values = [],
-        string $expires = null,
-        int $maxage = null,
-        int $smaxage = null,
-        bool $public = false,
-        bool $mustRevalidate = false,
-        array $vary = [],
-        string $lastModified = null,
-        string $Etag = null,
+        $expires = null,
+        $maxage = null,
+        $smaxage = null,
+        $public = false,
+        $mustRevalidate = false,
+        $vary = [],
+        $lastModified = null,
+        $Etag = null,
         $maxstale = null,
         $staleWhileRevalidate = null,
         $staleIfError = null

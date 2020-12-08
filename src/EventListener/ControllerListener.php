@@ -63,15 +63,13 @@ class ControllerListener implements EventSubscriberInterface
         if (method_exists($method, 'getAttributes')) {
             $classAttributes = $object->getAttributes();
             array_walk($classAttributes, function (\ReflectionAttribute &$value) {
-                $className = '\\'.$value->getName();
-                $value = new $className($value->getArguments());
+                $value = $value->newInstance();
             });
             $classConfigurations = array_merge($classConfigurations, $this->getConfigurations($classAttributes));
 
             $methodAttributes = $method->getAttributes();
             array_walk($methodAttributes, function (\ReflectionAttribute &$value) {
-                $className = '\\'.$value->getName();
-                $value = new $className($value->getArguments());
+                $value = $value->newInstance();
             });
             $methodConfigurations = array_merge($methodConfigurations, $this->getConfigurations($methodAttributes));
         }
