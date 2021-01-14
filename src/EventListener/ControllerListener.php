@@ -60,7 +60,7 @@ class ControllerListener implements EventSubscriberInterface
         $classConfigurations = $this->getConfigurations($this->reader->getClassAnnotations($object));
         $methodConfigurations = $this->getConfigurations($this->reader->getMethodAnnotations($method));
 
-        if (method_exists($method, 'getAttributes')) {
+        if (80000 >= \PHP_VERSION_ID) {
             $classAttributes = $object->getAttributes();
             array_walk($classAttributes, function (\ReflectionAttribute &$value) {
                 $value = $value->newInstance();
