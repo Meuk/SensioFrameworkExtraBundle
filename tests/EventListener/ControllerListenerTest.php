@@ -140,38 +140,12 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->onKernelController($this->event);
     }
 
-    /**
-     * @requires PHP 8.0
-     */
-    public function testMultipleAttributesOnClassThrowsExceptionUnlessConfigurationAllowsArray()
-    {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('Multiple "cache" annotations are not allowed');
-
-        $controller = new FooControllerMultipleCacheAttributeAtClass();
-        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
-        $this->listener->onKernelController($this->event);
-    }
-
     public function testMultipleAnnotationsOnMethodThrowsExceptionUnlessConfigurationAllowsArray()
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('Multiple "cache" annotations are not allowed');
 
         $controller = new FooControllerMultipleCacheAtMethod();
-        $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
-        $this->listener->onKernelController($this->event);
-    }
-
-    /**
-     * @requires PHP 8.0
-     */
-    public function testMultipleAttributesOnMethodThrowsExceptionUnlessConfigurationAllowsArray()
-    {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('Multiple "cache" annotations are not allowed');
-
-        $controller = new FooControllerMultipleCacheAttributeAtMethod();
         $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
         $this->listener->onKernelController($this->event);
     }

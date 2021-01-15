@@ -55,12 +55,16 @@ class ParamConverter extends ConfigurationAnnotation
      */
     private $converter;
 
+    /**
+     * ParamConverter constructor.
+     * @param array|string $data
+     */
     public function __construct(
         $data = [],
-        $class = null,
-        $options = [],
-        $isOptional = false,
-        $converter = null
+        string $class = null,
+        array $options = [],
+        bool $isOptional = false,
+        string $converter = null
     ) {
         $values = [];
         if (\is_string($data)) {

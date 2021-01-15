@@ -28,13 +28,17 @@ class Entity extends ParamConverter
         $this->setOptions($options);
     }
 
+    /**
+     * Entity constructor.
+     * @param array|string $data
+     */
     public function __construct(
         $data = [],
-        $expr = null,
-        $class = null,
-        $options = [],
-        $isOptional = false,
-        $converter = null
+        string $expr = null,
+        string $class = null,
+        array $options = [],
+        bool $isOptional = false,
+        string $converter = null
     ) {
         $values = [];
         if (\is_string($data)) {

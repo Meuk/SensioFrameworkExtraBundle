@@ -17,7 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
-#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class Template extends ConfigurationAnnotation
 {
     /**
@@ -48,11 +48,15 @@ class Template extends ConfigurationAnnotation
      */
     private $owner = [];
 
+    /**
+     * Template constructor.
+     * @param array|string $data
+     */
     public function __construct(
         $data = [],
-        $vars = [],
-        $isStreamable = false,
-        $owner = []
+        array $vars = [],
+        bool $isStreamable = false,
+        array $owner = []
     ) {
         $values = [];
         if (\is_string($data)) {

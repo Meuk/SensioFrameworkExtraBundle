@@ -13,7 +13,13 @@ namespace Sensio\Bundle\FrameworkExtraBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Persistence\Proxy;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -60,17 +66,32 @@ class ControllerListener implements EventSubscriberInterface
         $classConfigurations = $this->getConfigurations($this->reader->getClassAnnotations($object));
         $methodConfigurations = $this->getConfigurations($this->reader->getMethodAnnotations($method));
 
-        if (80000 >= \PHP_VERSION_ID) {
+        if (80000 <= \PHP_VERSION_ID) {
+            $createAttributes = function(&$attributes) {
+                $attributes = array_map(function (\ReflectionAttribute $value) {
+                    if (
+                    in_array(
+                        $value->getName(), [
+                            Cache::class,
+                            ParamConverter::class,
+                            IsGranted::class,
+                            Entity::class,
+                            Security::class,
+                            Template::class
+                        ]
+                    )
+                    ) {
+                        return $value->newInstance();
+                    }
+                }, $attributes);
+            };
             $classAttributes = $object->getAttributes();
-            array_walk($classAttributes, function (\ReflectionAttribute &$value) {
-                $value = $value->newInstance();
-            });
+            $createAttributes($classAttributes);
             $classConfigurations = array_merge($classConfigurations, $this->getConfigurations($classAttributes));
 
+
             $methodAttributes = $method->getAttributes();
-            array_walk($methodAttributes, function (\ReflectionAttribute &$value) {
-                $value = $value->newInstance();
-            });
+            $createAttributes($methodAttributes);
             $methodConfigurations = array_merge($methodConfigurations, $this->getConfigurations($methodAttributes));
         }
 

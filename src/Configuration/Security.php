@@ -17,7 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
-#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class Security extends ConfigurationAnnotation
 {
     /**
@@ -44,10 +44,14 @@ class Security extends ConfigurationAnnotation
      */
     protected $message = 'Access denied.';
 
+    /**
+     * Security constructor.
+     * @param array|string $data
+     */
     public function __construct(
         $data = [],
-        $message = null,
-        $statusCode = null
+        string $message = null,
+        ?int $statusCode = null
     ) {
         $values = [];
         if (\is_string($data)) {
