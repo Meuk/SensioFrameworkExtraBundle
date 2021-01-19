@@ -31,7 +31,7 @@ class Cache extends ConfigurationAnnotation
      * The number of seconds that the response is considered fresh by a private
      * cache like a web browser.
      *
-     * @var int
+     * @var int|string
      */
     private $maxage;
 
@@ -39,7 +39,7 @@ class Cache extends ConfigurationAnnotation
      * The number of seconds that the response is considered fresh by a public
      * cache like a reverse proxy cache.
      *
-     * @var int
+     * @var int|string
      */
     private $smaxage;
 
@@ -104,6 +104,8 @@ class Cache extends ConfigurationAnnotation
 
     /**
      * Cache constructor.
+     * @param int|string $maxage
+     * @param int|string $smaxage
      * @param int|string $maxstale
      * @param int|string $staleWhileRevalidate
      * @param int|string $staleIfError
@@ -111,8 +113,8 @@ class Cache extends ConfigurationAnnotation
     public function __construct(
         array $values = [],
         string $expires = null,
-        ?int $maxage = null,
-        ?int $smaxage = null,
+        $maxage = null,
+        $smaxage = null,
         bool $public = false,
         bool $mustRevalidate = false,
         array $vary = [],
