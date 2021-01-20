@@ -45,7 +45,6 @@ class Security extends ConfigurationAnnotation
     protected $message = 'Access denied.';
 
     /**
-     * Security constructor.
      * @param array|string $data
      */
     public function __construct(
