@@ -103,7 +103,6 @@ class Cache extends ConfigurationAnnotation
     private $staleIfError;
 
     /**
-     * Cache constructor.
      * @param int|string $maxage
      * @param int|string $smaxage
      * @param int|string $maxstale
