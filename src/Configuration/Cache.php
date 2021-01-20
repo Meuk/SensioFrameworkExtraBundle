@@ -39,7 +39,7 @@ class Cache extends ConfigurationAnnotation
      * The number of seconds that the response is considered fresh by a public
      * cache like a reverse proxy cache.
      *
-     * @var int|string
+     * @var int|string|null
      */
     private $smaxage;
 
