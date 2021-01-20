@@ -29,7 +29,6 @@ class Entity extends ParamConverter
     }
 
     /**
-     * Entity constructor.
      * @param array|string $data
      */
     public function __construct(
