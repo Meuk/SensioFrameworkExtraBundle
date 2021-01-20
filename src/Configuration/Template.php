@@ -49,7 +49,6 @@ class Template extends ConfigurationAnnotation
     private $owner = [];
 
     /**
-     * Template constructor.
      * @param array|string $data
      */
     public function __construct(
