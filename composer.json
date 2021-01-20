@@ -31,7 +31,7 @@
         "symfony/monolog-bundle": "^3.2",
         "symfony/monolog-bridge": "^4.0|^5.0",
         "symfony/phpunit-bridge": "^4.4.9|^5.0.9",
-        "symfony/psr-http-message-bridge": "^1.1|^2.0",
+        "symfony/psr-http-message-bridge": "^1.1",
         "symfony/security-bundle": "^4.4|^5.0",
         "symfony/twig-bundle": "^4.4|^5.0",
         "symfony/yaml": "^4.4|^5.0",
