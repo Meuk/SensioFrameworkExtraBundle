@@ -22,8 +22,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooController
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerCacheAttributeAtMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAtClass;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAtMethod;
-use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAttributeAtClass;
-use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerMultipleCacheAttributeAtMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerParamConverterAtClassAndMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooControllerParamConverterAttributeAtClassAndMethod;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +36,7 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $this->request = $this->createRequest();
 
         // trigger the autoloading of the @Cache annotation
-        class_exists('Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache');
+        class_exists(Cache::class);
     }
 
     protected function tearDown(): void
@@ -160,11 +158,11 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $annotations = $this->request->attributes->get('_converters');
         $this->assertNotNull($annotations);
         $this->assertArrayHasKey(0, $annotations);
-        $this->assertInstanceOf('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter', $annotations[0]);
+        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[0]);
         $this->assertEquals('test', $annotations[0]->getName());
 
         $this->assertArrayHasKey(1, $annotations);
-        $this->assertInstanceOf('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter', $annotations[1]);
+        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[1]);
         $this->assertEquals('test2', $annotations[1]->getName());
 
         $this->assertCount(2, $annotations);
@@ -183,11 +181,11 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $annotations = $this->request->attributes->get('_converters');
         $this->assertNotNull($annotations);
         $this->assertArrayHasKey(0, $annotations);
-        $this->assertInstanceOf('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter', $annotations[0]);
+        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[0]);
         $this->assertEquals('test', $annotations[0]->getName());
 
         $this->assertArrayHasKey(1, $annotations);
-        $this->assertInstanceOf('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter', $annotations[1]);
+        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[1]);
         $this->assertEquals('test2', $annotations[1]->getName());
 
         $this->assertCount(2, $annotations);
@@ -202,7 +200,7 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
 
     private function getFilterControllerEvent($controller, Request $request)
     {
-        $mockKernel = $this->getMockForAbstractClass('Symfony\Component\HttpKernel\Kernel', ['', '']);
+        $mockKernel = $this->getMockForAbstractClass(\Symfony\Component\HttpKernel\Kernel::class, ['', '']);
 
         return new ControllerEvent($mockKernel, $controller, $request, HttpKernelInterface::MASTER_REQUEST);
     }

@@ -52,7 +52,7 @@ class IsGranted extends ConfigurationAnnotation
     private $statusCode;
 
     /**
-     * @param mixed $subject
+     * @param mixed        $subject
      * @param array|string $data
      */
     public function __construct(
