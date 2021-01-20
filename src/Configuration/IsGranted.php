@@ -52,7 +52,6 @@ class IsGranted extends ConfigurationAnnotation
     private $statusCode;
 
     /**
-     * IsGranted constructor.
      * @param mixed $subject
      * @param array|string $data
      */
