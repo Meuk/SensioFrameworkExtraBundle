@@ -31,7 +31,7 @@ class Cache extends ConfigurationAnnotation
      * The number of seconds that the response is considered fresh by a private
      * cache like a web browser.
      *
-     * @var int|string
+     * @var int|string|null
      */
     private $maxage;
 
