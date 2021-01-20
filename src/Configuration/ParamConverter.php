@@ -56,7 +56,6 @@ class ParamConverter extends ConfigurationAnnotation
     private $converter;
 
     /**
-     * ParamConverter constructor.
      * @param array|string $data
      */
     public function __construct(
