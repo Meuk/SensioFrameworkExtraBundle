@@ -104,10 +104,10 @@ class Cache extends ConfigurationAnnotation
 
     /**
      * @param int|string|null $maxage
-     * @param int|string      $smaxage
-     * @param int|string      $maxstale
-     * @param int|string      $staleWhileRevalidate
-     * @param int|string      $staleIfError
+     * @param int|string|null $smaxage
+     * @param int|string|null $maxstale
+     * @param int|string|null $staleWhileRevalidate
+     * @param int|string|null $staleIfError
      */
     public function __construct(
         array $values = [],
