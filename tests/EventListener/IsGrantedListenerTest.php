@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class IsGrantedListenerTest extends \PHPUnit\Framework\TestCase
 {
@@ -153,7 +154,7 @@ class IsGrantedListenerTest extends \PHPUnit\Framework\TestCase
 
     public function testNotFoundHttpException()
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Not found');
 
         $request = $this->createRequest(new IsGranted(['attributes' => 'ROLE_ADMIN', 'statusCode' => 404, 'message' => 'Not found']));

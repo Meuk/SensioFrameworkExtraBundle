@@ -27,6 +27,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Tests\EventListener\Fixture\FooController
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ControllerListenerTest extends \PHPUnit\Framework\TestCase
 {
@@ -150,7 +151,7 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
 
     public function testMultipleParamConverterAnnotationsOnMethod()
     {
-        $paramConverter = new \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter([]);
+        $paramConverter = new ParamConverter([]);
         $controller = new FooControllerParamConverterAtClassAndMethod();
         $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
         $this->listener->onKernelController($this->event);
@@ -158,11 +159,11 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $annotations = $this->request->attributes->get('_converters');
         $this->assertNotNull($annotations);
         $this->assertArrayHasKey(0, $annotations);
-        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[0]);
+        $this->assertInstanceOf(ParamConverter::class, $annotations[0]);
         $this->assertEquals('test', $annotations[0]->getName());
 
         $this->assertArrayHasKey(1, $annotations);
-        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[1]);
+        $this->assertInstanceOf(ParamConverter::class, $annotations[1]);
         $this->assertEquals('test2', $annotations[1]->getName());
 
         $this->assertCount(2, $annotations);
@@ -173,7 +174,7 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
      */
     public function testMultipleParamConverterAttributesOnMethod()
     {
-        $paramConverter = new \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter([]);
+        $paramConverter = new ParamConverter([]);
         $controller = new FooControllerParamConverterAttributeAtClassAndMethod();
         $this->event = $this->getFilterControllerEvent([$controller, 'barAction'], $this->request);
         $this->listener->onKernelController($this->event);
@@ -181,11 +182,11 @@ class ControllerListenerTest extends \PHPUnit\Framework\TestCase
         $annotations = $this->request->attributes->get('_converters');
         $this->assertNotNull($annotations);
         $this->assertArrayHasKey(0, $annotations);
-        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[0]);
+        $this->assertInstanceOf(ParamConverter::class, $annotations[0]);
         $this->assertEquals('test', $annotations[0]->getName());
 
         $this->assertArrayHasKey(1, $annotations);
-        $this->assertInstanceOf(\Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter::class, $annotations[1]);
+        $this->assertInstanceOf(ParamConverter::class, $annotations[1]);
         $this->assertEquals('test2', $annotations[1]->getName());
 
         $this->assertCount(2, $annotations);
