@@ -51,11 +51,15 @@ class IsGranted extends ConfigurationAnnotation
      */
     private $statusCode;
 
+    /**
+     * @param mixed        $subject
+     * @param array|string $data
+     */
     public function __construct(
         $data = [],
         $subject = null,
-        $message = null,
-        $statusCode = null
+        string $message = null,
+        ?int $statusCode = null
     ) {
         $values = [];
         if (\is_string($data)) {

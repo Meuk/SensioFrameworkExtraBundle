@@ -13,6 +13,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Persistence\Proxy;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -60,17 +61,21 @@ class ControllerListener implements EventSubscriberInterface
         $classConfigurations = $this->getConfigurations($this->reader->getClassAnnotations($object));
         $methodConfigurations = $this->getConfigurations($this->reader->getMethodAnnotations($method));
 
-        if (method_exists($method, 'getAttributes')) {
-            $classAttributes = $object->getAttributes();
-            array_walk($classAttributes, function (\ReflectionAttribute &$value) {
-                $value = $value->newInstance();
-            });
+        if (80000 <= \PHP_VERSION_ID) {
+            $classAttributes = array_map(
+                function (\ReflectionAttribute $attribute) {
+                    return $attribute->newInstance();
+                },
+                $object->getAttributes(ConfigurationAnnotation::class, \ReflectionAttribute::IS_INSTANCEOF)
+            );
             $classConfigurations = array_merge($classConfigurations, $this->getConfigurations($classAttributes));
 
-            $methodAttributes = $method->getAttributes();
-            array_walk($methodAttributes, function (\ReflectionAttribute &$value) {
-                $value = $value->newInstance();
-            });
+            $methodAttributes = array_map(
+                function (\ReflectionAttribute $attribute) {
+                    return $attribute->newInstance();
+                },
+                $method->getAttributes(ConfigurationAnnotation::class, \ReflectionAttribute::IS_INSTANCEOF)
+            );
             $methodConfigurations = array_merge($methodConfigurations, $this->getConfigurations($methodAttributes));
         }
 

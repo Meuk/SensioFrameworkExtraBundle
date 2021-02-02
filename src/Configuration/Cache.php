@@ -17,7 +17,7 @@ namespace Sensio\Bundle\FrameworkExtraBundle\Configuration;
  * @author Fabien Potencier <fabien@symfony.com>
  * @Annotation
  */
-#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class Cache extends ConfigurationAnnotation
 {
     /**
@@ -31,7 +31,7 @@ class Cache extends ConfigurationAnnotation
      * The number of seconds that the response is considered fresh by a private
      * cache like a web browser.
      *
-     * @var int
+     * @var int|string|null
      */
     private $maxage;
 
@@ -39,7 +39,7 @@ class Cache extends ConfigurationAnnotation
      * The number of seconds that the response is considered fresh by a public
      * cache like a reverse proxy cache.
      *
-     * @var int
+     * @var int|string|null
      */
     private $smaxage;
 
@@ -102,16 +102,23 @@ class Cache extends ConfigurationAnnotation
      */
     private $staleIfError;
 
+    /**
+     * @param int|string|null $maxage
+     * @param int|string|null $smaxage
+     * @param int|string|null $maxstale
+     * @param int|string|null $staleWhileRevalidate
+     * @param int|string|null $staleIfError
+     */
     public function __construct(
-        $values = [],
-        $expires = null,
+        array $values = [],
+        string $expires = null,
         $maxage = null,
         $smaxage = null,
-        $public = false,
-        $mustRevalidate = false,
-        $vary = [],
-        $lastModified = null,
-        $Etag = null,
+        bool $public = false,
+        bool $mustRevalidate = false,
+        array $vary = [],
+        ?string $lastModified = null,
+        ?string $etag = null,
         $maxstale = null,
         $staleWhileRevalidate = null,
         $staleIfError = null
@@ -123,7 +130,7 @@ class Cache extends ConfigurationAnnotation
         $values['mustRevalidate'] = $values['mustRevalidate'] ?? $mustRevalidate;
         $values['vary'] = $values['vary'] ?? $vary;
         $values['lastModified'] = $values['lastModified'] ?? $lastModified;
-        $values['Etag'] = $values['Etag'] ?? $Etag;
+        $values['Etag'] = $values['Etag'] ?? $etag;
         $values['maxstale'] = $values['maxstale'] ?? $maxstale;
         $values['staleWhileRevalidate'] = $values['staleWhileRevalidate'] ?? $staleWhileRevalidate;
         $values['staleIfError'] = $values['staleIfError'] ?? $staleIfError;

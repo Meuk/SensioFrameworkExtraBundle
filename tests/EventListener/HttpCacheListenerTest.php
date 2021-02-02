@@ -132,7 +132,7 @@ class HttpCacheListenerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('5', $this->response->headers->getCacheControlDirective('max-stale'));
         $this->assertEquals('6', $this->response->headers->getCacheControlDirective('stale-while-revalidate'));
         $this->assertEquals('7', $this->response->headers->getCacheControlDirective('stale-if-error'));
-        $this->assertInstanceOf('DateTime', $this->response->getExpires());
+        $this->assertInstanceOf(\DateTime::class, $this->response->getExpires());
     }
 
     public function testCacheMaxAgeSupportsStrtotimeFormat()
@@ -276,7 +276,7 @@ class HttpCacheListenerTest extends \PHPUnit\Framework\TestCase
 
     private function getKernel()
     {
-        return $this->getMockBuilder('Symfony\Component\HttpKernel\HttpKernelInterface')->getMock();
+        return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
     }
 }
 
